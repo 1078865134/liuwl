@@ -1,5 +1,6 @@
 package com.neuedu.controller;
 
+import com.neuedu.common.ServerResponse;
 import com.neuedu.dao.UserInfoMapper;
 import com.neuedu.pojo.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,12 @@ public class Text {
     UserInfoMapper userInfoMapper;
 
     @RequestMapping(value = "/user/{userid}")
-    public UserInfo getuser(@PathVariable Integer userid){
-        return userInfoMapper.selectByPrimaryKey(userid);
+    public ServerResponse<UserInfo> getuser(@PathVariable Integer userid){
+        UserInfo userInfo=userInfoMapper.selectByPrimaryKey(userid);
+        if(userInfo!=null){
+            return ServerResponse.createServerResponseBySuccess(null,userInfo);
+        }else{
+            return ServerResponse.serverResponseByERROR("fail");
+        }
     }
 }
