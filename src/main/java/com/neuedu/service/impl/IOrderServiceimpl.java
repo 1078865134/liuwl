@@ -21,8 +21,8 @@ import com.alipay.demo.trade.service.impl.AlipayTradeServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.Utils;
 import com.alipay.demo.trade.utils.ZxingUtils;
-import com.alipay.trade.DemoHbRunner;
-import com.alipay.trade.Main;
+import com.neuedu.main.DemoHbRunner;
+import com.neuedu.main.Main;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.google.common.collect.Lists;
@@ -805,6 +805,32 @@ public class IOrderServiceimpl implements IOrderService {
             return ServerResponse.createServerResponseBySuccess();
         }
         return ServerResponse.serverResponseByERROR("支付宝信息保存失败");
+    }
+
+    @Override
+    public void closeOrder(String time) {
+        //查询规定时间未付款的订单
+        List<Order> orderList = orderMapper.findOrderByCreateTime(Const.OrderStatusEnum.ORDER_UN_PAY.getCode(), time);
+        if(orderList!=null&&orderList.size()>0){
+            for(Order order:orderList){
+                List<OrderItem> orderItemList = orderItemMapper.findOrderItemByorderNo(order.getOrderNo());
+                if(orderItemList!=null&&orderItemList.size()>0){
+                    for(OrderItem orderItem:orderItemList){
+                        Product product = productMapper.selectByPrimaryKey(orderItem.getProductId());
+                        if(product==null){
+                            continue;
+                        }
+                        //加库存
+                        product.setStock(product.getStock()+orderItem.getQuantity());
+                        productMapper.updateByPrimaryKey(product);
+                    }
+                }
+                //关闭订单
+                order.setStatus(Const.OrderStatusEnum.ORDER_CANCELED.getCode());
+                order.setCloseTime(new Date());
+                orderMapper.updateByPrimaryKey(order);
+            }
+        }
     }
 
 

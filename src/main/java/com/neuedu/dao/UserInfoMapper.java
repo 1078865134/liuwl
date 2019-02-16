@@ -80,4 +80,15 @@ public interface UserInfoMapper {
 
     int updateUserByEmailPhoneQuestionAnswer(UserInfo userInfo);
 
+    /**
+     * 自动登录
+     */
+    int updateTokenByUserid(@Param("userId") Integer userId,
+                            @Param("token") String token);
+
+    /**
+     * 查询token
+     */
+    UserInfo findUserinfoByToken(String token);
+
 }

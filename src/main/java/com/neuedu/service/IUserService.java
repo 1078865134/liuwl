@@ -51,4 +51,14 @@ public interface IUserService {
      * 登录状态修改用户信息
      */
     ServerResponse update_information(UserInfo user);
+
+//    /**
+//     * 保存并设置token信息
+//     */
+//    int updateTokenByUserid(Integer userid,String token);
+//
+    /**
+     * 查询token
+     */
+    UserInfo findUserinfoByToken(String token);
 }

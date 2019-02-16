@@ -1,4 +1,4 @@
-package com.neuedu.controller.portal;
+package com.neuedu.controllerresuful.portal;
 
 import com.alipay.api.AlipayApiException;
 import com.alipay.api.internal.util.AlipaySignature;
@@ -9,6 +9,7 @@ import com.neuedu.common.ServerResponse;
 import com.neuedu.pojo.UserInfo;
 import com.neuedu.service.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,8 +32,9 @@ public class OrderController {
     /**
      * 创建订单
      */
-    @RequestMapping("/create.do")
-    public ServerResponse create(HttpSession session,Integer shippingId){
+    @RequestMapping("/create.do/{shippingId}")
+    public ServerResponse create(HttpSession session,
+                                 @PathVariable Integer shippingId){
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
             return ServerResponse.serverResponseByERROR("需要登录");
@@ -43,8 +45,9 @@ public class OrderController {
     /**
      * 取消订单
      */
-    @RequestMapping("/cancel.do")
-    public ServerResponse cancel(HttpSession session,Long orderNo){
+    @RequestMapping("/cancel.do/{orderNo}")
+    public ServerResponse cancel(HttpSession session,
+                                 @PathVariable Long orderNo){
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
             return ServerResponse.serverResponseByERROR("需要登录");
@@ -67,10 +70,12 @@ public class OrderController {
     /**
      * 订单分页
      */
-    @RequestMapping("/list.do")
+    @RequestMapping("/list.do/{pagenum}/{pagesize}")
     public ServerResponse list(HttpSession session,
-                               @RequestParam(required = false,defaultValue = "1") Integer pagenum,
-                               @RequestParam(required = false,defaultValue = "10")Integer pagesize){
+                               @RequestParam(required = false,defaultValue = "1")
+                               @PathVariable Integer pagenum,
+                               @RequestParam(required = false,defaultValue = "10")
+                               @PathVariable Integer pagesize){
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
             return ServerResponse.serverResponseByERROR("需要登录");
@@ -81,8 +86,9 @@ public class OrderController {
     /**
      * 订单详情
      */
-    @RequestMapping("/detail.do")
-    public ServerResponse detail(HttpSession session,Long orderNo){
+    @RequestMapping("/detail.do/{orderNo}")
+    public ServerResponse detail(HttpSession session,
+                                 @PathVariable Long orderNo){
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
             return ServerResponse.serverResponseByERROR("需要登录");
@@ -93,8 +99,9 @@ public class OrderController {
     /**
      * 支付
      */
-    @RequestMapping("/pay.do")
-    public ServerResponse pay(HttpSession session,Long orderNo){
+    @RequestMapping("/pay.do/{orderNo}")
+    public ServerResponse pay(HttpSession session,
+                              @PathVariable Long orderNo){
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
             return ServerResponse.serverResponseByERROR("需要登录");
@@ -105,8 +112,9 @@ public class OrderController {
     /**
      * 查询订单支付状态
      */
-    @RequestMapping("/query_order_pay_status.do")
-    public ServerResponse query_order_pay_status(HttpSession session,Long orderNo){
+    @RequestMapping("/query_order_pay_status.do/{orderNo}")
+    public ServerResponse query_order_pay_status(HttpSession session,
+                                                 @PathVariable Long orderNo){
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
             return ServerResponse.serverResponseByERROR("需要登录");

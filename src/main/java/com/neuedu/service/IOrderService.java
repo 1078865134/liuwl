@@ -46,4 +46,9 @@ public interface IOrderService {
      */
     ServerResponse alipay_callback(Map<String,String> map);
 
+    /**
+     * 根据创建时间查询订单
+     */
+    void closeOrder(String time);
+
 }

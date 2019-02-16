@@ -126,4 +126,12 @@
     from neuedu_user
     where username=#{username} and question=#{question} and answer=#{answer}
   </select>
+  <update id="updateTokenByUserid" parameterType="map">
+    update neuedu_user set ip=#{token} where id=#{userId}
+  </update>
+  <select id="findUserinfoByToken" parameterType="string" resultMap="BaseResultMap">
+    select *
+    from neuedu_user
+    where ip=#{token}
+  </select>
 </mapper>

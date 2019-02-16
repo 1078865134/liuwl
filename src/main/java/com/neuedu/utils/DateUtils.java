@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class DateUtils {
 
-    private static  final String STANDARD_FORNAT="yyyy-MM-dd HH:mm:ss";
+    public static  final String STANDARD_FORNAT="yyyy-MM-dd HH:mm:ss";
     /**
      * date--string
      */
@@ -47,4 +47,5 @@ public class DateUtils {
         System.out.println(dateToString(new Date()));
         System.out.println(strToDate("2019-01-08 19:38:25"));
     }
+
 }

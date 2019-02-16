@@ -1,4 +1,4 @@
-package com.neuedu.controller.backend;
+package com.neuedu.controllerresuful.backend;
 
 import com.neuedu.common.ServerResponse;
 import com.neuedu.service.IProductService;
@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.awt.font.MultipleMaster;
 
 @Controller
 @RequestMapping(value = "/manage/product")

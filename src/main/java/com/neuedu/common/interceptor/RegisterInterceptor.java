@@ -1,12 +1,10 @@
-package com.neuedu.interceptor;
+package com.neuedu.common.interceptor;
 
-import com.neuedu.interceptor.AutoLoginInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import javax.xml.ws.Action;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class RegisterInterceptor implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         //创建放行集合
         List<String> excludeList = new ArrayList<>();
-        excludeList.add("/manage/user/login.do");
+        excludeList.add("/manage/user/login.do/**");
         excludeList.add("/manage/user/register.do");
         excludeList.add("/manage/user/logout.do");
         //依次是注册拦截器、拦截什么、放行什么

@@ -142,6 +142,7 @@ public class IProductServiceimpl implements IProductService {
      */
     @Override
     public ServerResponse list(Integer pageNum, Integer pageSize) {
+
         PageHelper.startPage(pageNum,pageSize);
         List<Product> products = productMapper.selectAll();
         ArrayList<ProductListVO> productListVOList = Lists.newArrayList();

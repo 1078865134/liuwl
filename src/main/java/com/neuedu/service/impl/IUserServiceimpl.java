@@ -6,6 +6,8 @@ import com.neuedu.common.Const;
 import com.neuedu.common.ServerResponse;
 import com.neuedu.dao.UserInfoMapper;
 import com.neuedu.pojo.UserInfo;
+import com.neuedu.redis.RedisPool;
+import com.neuedu.redis.Redisapi;
 import com.neuedu.service.IUserService;
 import com.neuedu.utils.MD5Utils;
 import com.neuedu.utils.TokenCache;
@@ -20,7 +22,8 @@ public class IUserServiceimpl implements IUserService {
 
     @Autowired
     UserInfoMapper userInfoMapper;
-
+    @Autowired
+    Redisapi redisapi;
     /**
      * 登录
      */
@@ -46,6 +49,13 @@ public class IUserServiceimpl implements IUserService {
 
         if(userInfo==null){
             return ServerResponse.serverResponseByERROR("密码错误");
+        }
+        //自动登录
+        //生成token
+        String token = MD5Utils.getMD5Code(username + password);
+        int i1 = userInfoMapper.updateTokenByUserid(userInfo.getId(),token);
+        if (i1 < 0) {
+            return ServerResponse.serverResponseByERROR("更新token失败");
         }
 
         //返回结果
@@ -138,8 +148,11 @@ public class IUserServiceimpl implements IUserService {
         }
         //服务端生成token保存并返回给客户端
         String forgetToken = UUID.randomUUID().toString();
-        //guava cache
-        TokenCache.set(username,forgetToken);
+//        redis替换guava cache
+//        guava cache
+//        TokenCache.set(username,forgetToken);
+//        redis
+        redisapi.set(username,forgetToken);
 
         return ServerResponse.createServerResponseBySuccess(forgetToken);
     }
@@ -160,11 +173,14 @@ public class IUserServiceimpl implements IUserService {
         if (forgetToken==null||forgetToken.equals("")){
             return ServerResponse.serverResponseByERROR("答案不能为空");
         }
-
+//        redis替换guava cache
         //token校验
-        String token = TokenCache.get(username);
+//        guava catch获取
+//        String token = TokenCache.get(username);
+//        redis获取
+        String token=redisapi.get(username);
         if(token==null){
-            return ServerResponse.serverResponseByERROR("token过期");
+            return ServerResponse.serverResponseByERROR("token为空");
         }
         if(!token.equals(forgetToken)){
             return ServerResponse.serverResponseByERROR("无效token");
@@ -245,4 +261,26 @@ public class IUserServiceimpl implements IUserService {
         }
         return ServerResponse.serverResponseByERROR("修改信息失败");
     }
+
+//    /**
+//     * 保存并设置token信息
+//     */
+//    @Override
+//    public int updateTokenByUserid(Integer userid,String token) {
+//
+//        return userInfoMapper.updateTokenByUserid(userid,token);
+//    }
+//
+    /**
+     * 获取token
+     */
+    @Override
+    public UserInfo findUserinfoByToken(String token) {
+        if(token==null||token.equals("")){
+            return null;
+        }
+        return userInfoMapper.findUserinfoByToken(token);
+    }
+
+
 }

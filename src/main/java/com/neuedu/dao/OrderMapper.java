@@ -54,5 +54,8 @@ public interface OrderMapper {
 
     List<Order> findOrderByUserId(Integer userId);
 
+    List<Order> findOrderByCreateTime(@Param("orderStatus") Integer orderStatus,
+                                      @Param("time") String time);
+
 
 }

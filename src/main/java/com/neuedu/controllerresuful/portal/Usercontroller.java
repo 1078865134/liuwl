@@ -1,14 +1,16 @@
-package com.neuedu.controller.portal;
+package com.neuedu.controllerresuful.portal;
 
 import com.neuedu.common.Const;
 import com.neuedu.common.ServerResponse;
 import com.neuedu.pojo.UserInfo;
 import com.neuedu.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @RestController
@@ -20,14 +22,19 @@ public class Usercontroller {
     /**
      * 用户登录
      */
-    @RequestMapping(value = "/login.do")
-    public ServerResponse login(HttpSession session, String username, String password){
+    @RequestMapping(value = "/login.do/{username}/{password}")
+    public ServerResponse login(HttpServletResponse response,
+                                 HttpSession session,
+                                @PathVariable String username,
+                                @PathVariable String password){
 
         ServerResponse serverResponse = userService.login(username, password);
         if(serverResponse.isSuccess()){
             UserInfo userInfo = (UserInfo)serverResponse.getDate();
             session.setAttribute(Const.CURRENTUSER,userInfo);
         }
+
+
         return serverResponse;
     }
 
@@ -44,8 +51,8 @@ public class Usercontroller {
     /**
      * 根据用户名查问题
      */
-    @RequestMapping(value = "/forget_get_question.do")
-    public ServerResponse forget_get_question(String username){
+    @RequestMapping(value = "/forget_get_question.do/{username}")
+    public ServerResponse forget_get_question(@PathVariable String username){
 
         ServerResponse serverResponse = userService.forget_get_question(username);
         return serverResponse;
@@ -54,8 +61,10 @@ public class Usercontroller {
     /**
      * 校验答案
      */
-    @RequestMapping(value = "/forget_check_answer.do")
-    public ServerResponse forget_check_answer(String username,String question,String answer){
+    @RequestMapping(value = "/forget_check_answer.do/{username}/{question}/{answer}")
+    public ServerResponse forget_check_answer(@PathVariable String username,
+                                              @PathVariable String question,
+                                              @PathVariable String answer){
 
         ServerResponse serverResponse = userService.forget_check_answer(username,question,answer);
         return serverResponse;
@@ -64,8 +73,10 @@ public class Usercontroller {
     /**
      * 重置密码
      */
-    @RequestMapping(value = "/forget_reset_password.do")
-    public ServerResponse forget_reset_password(String username,String passwordnew,String forgetToken){
+    @RequestMapping(value = "/forget_reset_password.do/{username}/{passwordnew}/{forgetToken}")
+    public ServerResponse forget_reset_password(@PathVariable String username,
+                                                @PathVariable String passwordnew,
+                                                @PathVariable String forgetToken){
 
         ServerResponse serverResponse = userService.forget_reset_password(username,passwordnew,forgetToken);
         return serverResponse;
@@ -74,8 +85,9 @@ public class Usercontroller {
     /**
      * 校验用户名和邮箱是否存在
      */
-    @RequestMapping(value = "/check_valid.do")
-    public ServerResponse check_valid(String str,String type){
+    @RequestMapping(value = "/check_valid.do/{str}/{type}")
+    public ServerResponse check_valid(@PathVariable String str,
+                                      @PathVariable String type){
 
         ServerResponse serverResponse = userService.check_valid(str,type);
         return serverResponse;
@@ -100,8 +112,10 @@ public class Usercontroller {
     /**
      * 登录状态修改密码
      */
-    @RequestMapping(value = "/reset_password.do")
-    public ServerResponse reset_password(HttpSession session,String passwordold,String passwordnew){
+    @RequestMapping(value = "/reset_password.do/{passwordold}/{passwordnew}")
+    public ServerResponse reset_password(HttpSession session,
+                                         @PathVariable String passwordold,
+                                         @PathVariable String passwordnew){
         UserInfo userInfo= (UserInfo) session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null) {
             return ServerResponse.serverResponseByERROR("用户未登录");

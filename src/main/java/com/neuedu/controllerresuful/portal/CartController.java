@@ -1,10 +1,11 @@
-package com.neuedu.controller.portal;
+package com.neuedu.controllerresuful.portal;
 
 import com.neuedu.common.Const;
 import com.neuedu.common.ServerResponse;
 import com.neuedu.pojo.UserInfo;
 import com.neuedu.service.ICartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,8 +24,10 @@ public class CartController {
     /**
      * 购物车添加和更新商品
      */
-    @RequestMapping("/add.do")
-    public ServerResponse add(HttpSession session,Integer productId, Integer count){
+    @RequestMapping("/add.do/{productId}/{count}")
+    public ServerResponse add(HttpSession session,
+                              @PathVariable Integer productId,
+                              @PathVariable Integer count){
 
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
@@ -49,8 +52,10 @@ public class CartController {
     /**
      *更新购物车产品数量
      */
-    @RequestMapping("/update.do")
-    public ServerResponse update(HttpSession session,Integer productId, Integer count){
+    @RequestMapping("/update.do/{productId}/{count}")
+    public ServerResponse update(HttpSession session,
+                                 @PathVariable Integer productId,
+                                 @PathVariable Integer count){
 
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
@@ -62,8 +67,9 @@ public class CartController {
     /**
      *移除购物车中商品
      */
-    @RequestMapping("/delete_product.do")
-    public ServerResponse delete_product(HttpSession session,String productIds){
+    @RequestMapping("/delete_product.do/{productIds}")
+    public ServerResponse delete_product(HttpSession session,
+                                         @PathVariable String productIds){
 
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
@@ -75,8 +81,9 @@ public class CartController {
     /**
      *购物车选中某个商品
      */
-    @RequestMapping("/select.do")
-    public ServerResponse select(HttpSession session,Integer productId){
+    @RequestMapping("/select.do/{productId}")
+    public ServerResponse select(HttpSession session,
+                                 @PathVariable Integer productId){
 
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){
@@ -88,8 +95,9 @@ public class CartController {
     /**
      *购物车取消选中某个商品
      */
-    @RequestMapping("/un_select.do")
-    public ServerResponse un_select(HttpSession session,Integer productId){
+    @RequestMapping("/un_select.do/{productId}")
+    public ServerResponse un_select(HttpSession session,
+                                    @PathVariable Integer productId){
 
         UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
         if(userInfo==null){

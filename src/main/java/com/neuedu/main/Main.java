@@ -1,4 +1,4 @@
-package com.alipay.trade;
+package com.neuedu.main;
 
 import com.alipay.api.AlipayResponse;
 import com.alipay.api.domain.TradeFundBill;
@@ -20,7 +20,6 @@ import com.alipay.demo.trade.service.impl.AlipayMonitorServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeServiceImpl;
 import com.alipay.demo.trade.service.impl.AlipayTradeWithHBServiceImpl;
 import com.alipay.demo.trade.utils.Utils;
-import com.alipay.demo.trade.utils.ZxingUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

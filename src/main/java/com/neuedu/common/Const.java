@@ -12,6 +12,8 @@ public class Const {
 
     public static final  String TRADE_SUCCESS="TRADE_SUCCESS";
 
+    public static final  String AUTOLOGINKEN="autoLoginToken";
+
     /**
      * 支付类型
      */

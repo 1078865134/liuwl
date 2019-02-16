@@ -21,7 +21,7 @@ public class IAddressServiceimpl implements IAddressService {
     ShippingMapper shippingMapper;
 
     /**
-     * 添加订单
+     * 添加地址
      */
     @Override
     public ServerResponse add(Integer userId,Shipping shipping) {
@@ -36,7 +36,7 @@ public class IAddressServiceimpl implements IAddressService {
     }
 
     /**
-     * 删除订单
+     * 删除地址
      */
     @Override
     public ServerResponse del(Integer userId, Integer shippingId) {
@@ -51,7 +51,7 @@ public class IAddressServiceimpl implements IAddressService {
     }
 
     /**
-     * 修改订单信息
+     * 修改地址信息
      */
     @Override
     public ServerResponse update(Shipping shipping) {
@@ -66,7 +66,7 @@ public class IAddressServiceimpl implements IAddressService {
     }
 
     /**
-     * 查询订单信息
+     * 查询地址信息
      */
     @Override
     public ServerResponse select(Integer shippingId) {
@@ -78,7 +78,7 @@ public class IAddressServiceimpl implements IAddressService {
     }
 
     /**
-     * 查询订单信息
+     * 查询地址信息
      */
     @Override
     public ServerResponse list(Integer pagenum, Integer pagesize) {

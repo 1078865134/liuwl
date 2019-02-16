@@ -1,9 +1,8 @@
-package com.neuedu.controller.scheduler;
+package com.neuedu.controllerresuful.schedule;
 
 import com.neuedu.service.IOrderService;
 import com.neuedu.utils.PropertiesUtils;
 import org.apache.commons.lang.time.DateUtils;
-import org.aspectj.lang.annotation.Around;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -21,10 +20,11 @@ public class CloseOrder {
     @Scheduled(cron = "0 */1 * * * *")
     public void closeOrder()
     {
+        System.out.println("===========closeOrder=================");
         Integer hour = Integer.parseInt(PropertiesUtils.readByKey("close.order.time"));
         //时间处理的工具类,设置订单关闭时间
         //转成字符串类型
-        String date=com.neuedu.utils.DateUtils.dateToStr(DateUtils.addHours(new Date(),-hour));
+        String date=com.neuedu.utils.DateUtils.dateToString(DateUtils.addHours(new Date(),-hour));
         //创建时间来查询订单
         iOrderService.closeOrder(date);
     }

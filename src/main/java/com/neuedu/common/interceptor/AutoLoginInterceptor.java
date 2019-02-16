@@ -1,4 +1,4 @@
-package com.neuedu.interceptor;
+package com.neuedu.common.interceptor;
 
 import com.google.gson.Gson;
 import com.neuedu.common.Const;
@@ -7,7 +7,6 @@ import com.neuedu.pojo.UserInfo;
 import com.neuedu.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
