@@ -24,15 +24,6 @@ public class ProductManageController {
     @RequestMapping(value = "/save.do")
     public ServerResponse saveOrUpdate(HttpSession session, Product product){
 
-        UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
-        //判断是否登录
-        if(userInfo==null){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NEED_LOGIN.getCode(),Const.ResponceCodeEnum.NEED_LOGIN.getDesc());
-        }
-        //判断是否有权限
-        if(userInfo.getRole()!=Const.RoleEnum.ROLE_ADMIN.getCode()){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NO_PRIVILEGE.getCode(),Const.ResponceCodeEnum.NO_PRIVILEGE.getDesc());
-        }
         return productService.saveOrUpdate(product);
     }
 
@@ -42,15 +33,6 @@ public class ProductManageController {
     @RequestMapping(value = "/set_sale_status.do")
     public ServerResponse set_sale_status(HttpSession session, Integer id,Integer status){
 
-        UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
-        //判断是否登录
-        if(userInfo==null){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NEED_LOGIN.getCode(),Const.ResponceCodeEnum.NEED_LOGIN.getDesc());
-        }
-        //判断是否有权限
-        if(userInfo.getRole()!=Const.RoleEnum.ROLE_ADMIN.getCode()){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NO_PRIVILEGE.getCode(),Const.ResponceCodeEnum.NO_PRIVILEGE.getDesc());
-        }
         return productService.set_sale_status(id,status);
     }
 
@@ -60,15 +42,6 @@ public class ProductManageController {
     @RequestMapping(value = "/detail.do")
     public ServerResponse detail(HttpSession session, Integer id){
 
-        UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
-        //判断是否登录
-        if(userInfo==null){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NEED_LOGIN.getCode(),Const.ResponceCodeEnum.NEED_LOGIN.getDesc());
-        }
-        //判断是否有权限
-        if(userInfo.getRole()!=Const.RoleEnum.ROLE_ADMIN.getCode()){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NO_PRIVILEGE.getCode(),Const.ResponceCodeEnum.NO_PRIVILEGE.getDesc());
-        }
         return productService.detail(id);
     }
 
@@ -80,15 +53,7 @@ public class ProductManageController {
                                  @RequestParam(value = "pageNum",required = false,defaultValue = "1") Integer pageNum,
                                  @RequestParam(value = "pageSize",required = false,defaultValue = "10")Integer pageSize){
 
-        UserInfo userInfo = (UserInfo)session.getAttribute(Const.CURRENTUSER);
-        //判断是否登录
-        if(userInfo==null){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NEED_LOGIN.getCode(),Const.ResponceCodeEnum.NEED_LOGIN.getDesc());
-        }
-        //判断是否有权限
-        if(userInfo.getRole()!=Const.RoleEnum.ROLE_ADMIN.getCode()){
-            return ServerResponse.serverResponseByERROR(Const.ResponceCodeEnum.NO_PRIVILEGE.getCode(),Const.ResponceCodeEnum.NO_PRIVILEGE.getDesc());
-        }
+
         return productService.list(pageNum,pageSize);
     }
 
